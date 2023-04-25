@@ -26,7 +26,6 @@ class BlogsController extends Controller
      
     public function index()
     {
-        //
         $data = Blog::all();
         //$data = Blog::first()->paginate(5);
         //dd($data);
@@ -57,8 +56,10 @@ class BlogsController extends Controller
         //     'is_active' => $request->has('is_active')? 1 : 0
         // ]);
         //dd($request->all());
+        
+        //Blog::create($request->all());
 
-        Blog::create($request->all());
+        Blog::create($request->validated());
         return redirect()->route('blogs.index');
     }
 
@@ -106,8 +107,9 @@ class BlogsController extends Controller
         //     'is_active' => $request->is_active
         //     //'is_active' => $request->has('is_active')? 1 : 0
         // ]);
-
-        $data->update($request->all());
+        
+        //$data->update($request->all());
+        $data->update($request->validated());
         return redirect()->route('blogs.index');
     }
 

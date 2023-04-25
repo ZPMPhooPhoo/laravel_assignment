@@ -15,11 +15,11 @@ class PermissionController extends Controller
      */
 
      public function __construct(){
-        // $this->middleware('permission:permissionList', ['only' => 'index']);
-        // $this->middleware('permission:permissionCreate', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:permissionEdit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:permissionShow', ['only' => 'show']);
-        // $this->middleware('permission:permissionDelete', ['only' => 'destroy']);
+        $this->middleware('permission:permissionList', ['only' => 'index']);
+        $this->middleware('permission:permissionCreate', ['only' => ['create', 'store']]);
+        $this->middleware('permission:permissionEdit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:permissionShow', ['only' => 'show']);
+        $this->middleware('permission:permissionDelete', ['only' => 'destroy']);
         $this->middleware('auth');
      }
 
@@ -47,7 +47,7 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request)
     {
-        Permission::create($request->all());
+        Permission::create($request->validated());
         return redirect()->route('permission.index');
     }
 
@@ -85,7 +85,7 @@ class PermissionController extends Controller
     public function update(PermissionRequest $request, $id)
     {
         $data = Permission::where('id', $id)->first();
-        $data->update($request->all());
+        $data->update($request->validated());
         return redirect()->route('permission.index');
     }
 

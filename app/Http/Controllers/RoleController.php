@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -14,11 +15,20 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct(){
+        $this->middleware('permission:roleList', ['only' => 'index']);
+        $this->middleware('permission:roleCreate', ['only' => ['create', 'store']]);
+        $this->middleware('permission:roleEdit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:roleShow', ['only' => 'show']);
+        $this->middleware('permission:roleDelete', ['only' => 'destroy']);
+        $this->middleware('auth');
+     }
+
     public function index()
     {
         $data = Role::all();
         return view('backend.role.index', compact('data'));
-        
     }
 
     /**
@@ -38,9 +48,9 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $role = Role::create($request->all());
+        $role = Role::create($request->validated());
         $role->syncPermissions($request->input('permission_arr'));
         return redirect()->route('role.index');
     }
@@ -82,11 +92,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         $data = Role::where('id', $id)->first();
         $data->syncPermissions($request->get('permission_arr'));
-        $data->update($request->all());
+        $data->update($request->validated());
         return redirect()->route('role.index');
     }
 

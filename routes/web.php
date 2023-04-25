@@ -54,12 +54,6 @@ Route::prefix('admin')->group(function(){
     Route::resource('/user', UserController::class);
 });
 
-
-//Route::resource('admin/blogs', BlogsController::class);
-//Route::resource('admin/post', PostController::class);
-
-
-
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

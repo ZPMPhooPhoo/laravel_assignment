@@ -40,8 +40,6 @@
             </div>
             <div class="form-group mt-3">
                 <div class="form-check">
-                
-
                 @if($blog->is_active == 0)
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="is_active" id="inlineRadio1" value="0" checked>
@@ -61,12 +59,10 @@
                     <label class="form-check-label" for="inlineRadio2">is active</label>
                 </div>
                 @endif
-                
             </div>
             <button type="submit" class="btn btn-success mt-3">Update</button>
             <a href="{{route('blog.index')}}" class="btn btn-warning mt-3">Back</a>
             </form>
         </div>
-        
     </body>
 </html>

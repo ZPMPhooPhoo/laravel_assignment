@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogRequest;
-use Faker\Provider\Lorem;
-use Illuminate\Http\Request;
 
 use App\Models\Blog;
 
@@ -29,7 +27,7 @@ class BlogController extends Controller
     }
 
     public function store(BlogRequest $request){
-        // $request->validate([
+        // $data = $request->validate([
         //     'name' => 'required',
         //     'description' => 'required'
         // ]);
@@ -41,17 +39,16 @@ class BlogController extends Controller
         //     'description' => $data['description'],
         //     'is_active' => $data['is_active']
         // ]);
-        Blog::create($data);
-        // $data=Blog::all();
-        // return view('blog.index', compact('data'));
 
+        Blog::create($data);
+        
+        // return view('blog.index', compact('data'));
         return redirect()->route('blog.index');
     }
 
     public function show(Blog $blog)
     {
         return view('backend.blog.show',compact('blog'));
-        
     }
     public function edit(Blog $blog)
     {

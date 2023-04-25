@@ -10,7 +10,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
-        
 
         <style>
             body {
@@ -52,7 +51,6 @@
             
             <button type="submit" class="btn btn-success mt-3">Submit</button>
             <a href="{{route('blog.index')}}" class="btn btn-warning mt-3">Back</a>
-            
             </form>
         </div>
         

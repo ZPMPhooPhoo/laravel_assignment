@@ -24,5 +24,4 @@ class AdminController extends Controller
     public function datatable(){
         return view('backend.datatable');
     }
-
 }

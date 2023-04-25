@@ -14,6 +14,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct(){
+        $this->middleware('permission:postList', ['only' => 'index']);
+        $this->middleware('permission:postCreate', ['only' => ['create', 'store']]);
+        $this->middleware('permission:postEdit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:postShow', ['only' => 'show']);
+        $this->middleware('permission:postDelete', ['only' => 'destroy']);
+        $this->middleware('auth');
+     }
+
     public function index()
     {
         $data = Post::all();
@@ -39,14 +49,14 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        
-        Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'is_active' => $request->has('is_active')? 1 : 0
-        ]);
+        // Post::create($request->all());
+        // Post::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'is_active' => $request->has('is_active')? 1 : 0
+        // ]);
 
-        ///Post::create($request->all());
+        Post::create($request->validated());
         return redirect()->route('post.index');
     }
 
@@ -84,13 +94,14 @@ class PostController extends Controller
     public function update(PostRequest $request, $id)
     {
         $data = Post::where('id', $id)->first();
-        $data->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'is_active' => $request->has('is_active')? 1 : 0
-        ]);
-
         //$data->update($request->all());
+        // $data->update([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'is_active' => $request->has('is_active')? 1 : 0
+        // ]);
+
+        $data->update($request->validated());
         return redirect()->route('post.index');
     }
 

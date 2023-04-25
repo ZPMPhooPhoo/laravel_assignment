@@ -6,9 +6,9 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1>Role Listing</h1>
-    
+        @can('roleCreate')
         <a href="{{ route('role.create') }}" class="btn btn-success mt-3">Add New</a>
-    
+        @endcan
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -51,15 +51,15 @@
                   <td>{{ "ID - " . $val->id }}</td>
                   <td>{{ $val->name }}</td>                  
                   <td>
-                   
+                  @can('roleEdit')
                     <a href="{{route('role.edit',$val->id)}}" class="btn btn-primary">Edit</a>
-               
+                  @endcan
 
-             
+                  @can('roleShow')
                     <a href="{{route('role.show',$val->id)}}" class="btn btn-success">View</a>
-             
+                  @endcan
 
-                   
+                  @can('roleDelete') 
                     <form action="{{route('role.destroy',$val->id)}}" method="POST" style="display: inline-block">
                       @csrf @method('DELETE')
                       <button type="submit" class="btn btn-danger"
@@ -67,7 +67,7 @@
                         Delete
                       </button>
                     </form>
-          
+                  @endcan
                   </td>
                 </tr>
                 @endforeach

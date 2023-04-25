@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -17,12 +15,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('permission:userList', ['only' => 'index']);
+        $this->middleware('permission:userCreate', ['only' => ['create', 'store']]);
+        $this->middleware('permission:userEdit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:userShow', ['only' => 'show']);
+        $this->middleware('permission:userDelete', ['only' => 'destroy']);
+        $this->middleware('auth');
+     }
     public function index()
     {
         $data = User::all();
-        //dd($data);
-        
-        
         return view('backend.user.index', compact('data'));
     }
 
@@ -45,15 +48,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {        
-        $data = $request->validated();
-        //dd($data);
-        
+        $data = $request->validated();        
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])      
         ]);
-
         $user->assignRole($request->validated('roles'));
         
         return redirect()->route('user.index');

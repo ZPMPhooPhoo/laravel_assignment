@@ -315,6 +315,7 @@
               </li>
               @endcan
 
+              @can('roleList')
               <li class="nav-item">
                 <a href="{{route('role.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
@@ -323,7 +324,8 @@
                     <span class="right badge badge-danger">New</span>
                   </p>
                 </a>
-              </li> 
+              </li>
+              @endcan
             </ul>
           </li>
         

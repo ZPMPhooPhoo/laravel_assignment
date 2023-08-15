@@ -1,0 +1,113 @@
+Laravel
+composer
+web server
+mysql
+
+1.Authentication
+2.Dynamic Template(blade)
+3.Database Migration
+4.MVC Architecture
+5.Unit Testing
+6.Artisan
+
+Database => Eloquent Model (Query Builder)
+
+>>php artisan make:model Blog
+>>php artisan make:migration blogs
+blogs(migration), Blog(model)
+
+php artisan make:model Blog => model မှာ protected $fillable, migration column
+
+.env မှာ db name change
+
+>>php artisan config:clear
+>>php artisan migrate
+
+add image column
+>>php artisan make:migration add_images_to_blogs_table --table = blogs
+>>php artisan migrate
+
+>>php artisan make:controller BlogController
+>>php artisan make:controller BlogsController -r => resource
+>>php artisan route:list
+
+css/js/ => public folder
+
+blade 
+@dd ($data);
+method_field('PATCH')
+
+>>php artisan make:request BlogRequest
+
+validated
+Request => BlogRequest
+
+Laravel Authentication
+>>composer require laravel/ui
+>>php artisan ui vue --auth
+>>npm install, npm run dev
+
+controller မှာ add --construct function
+$this->middleware('auth')
+Under Provider => RouteServiceProvider yae Home mar
+'admin/admin' (add you want to show)
+web.php mar do prefix
+
+>>composer require spatie/laravel-permission
+>>php artisan vendor: publish --provider = "Spatie\Permission\PermissionServiceProvider"
+
+
+Super Admin - All Permission
+Editor - except db, widget
+
+Permission
+-dashboard permission
+-widget permission
+-blog-list
+-blog-create
+-blog-edit
+-blog-update
+-blog-delete
+-post-list
+
+>>php artisan make:seeder AdminSeeder
+>> php artisan db:seed
+>> php artisan migrate: refresh
+
+web.php mar => register => false
+Admin Seeder
+
+User HasRoles add
+RoleAndPermissionSeeder.php
+DatabaseSeeder.php
+master.blade.php mar @can
+
+Kernel.php => permission, role
+Role, Permission, User
+
+>>php artisan db:wipe
+
+Repository Pattern
+>>php artisan make:provider RepositoryServiceProvider
+interface join between controller and repository
+Repository List, show, get all();
+Service CRUD
+Repository implements Interface
+
+config/app.php
+Provider မှာ RepositoryServiceProvider ko pyan declare
+
+Repository => BlogRepoInterface.php
+              BlogRepository.php
+
+Services =>   BlogService.php
+              BlogServiceInterface.php
+
+Laravel API
+>>php artisan make:controller BlogController --api;
+Authorization => Barrer Token
+
+config-> auth.php
+>>php artisan config:clear
+>>php artisan route:cache
+>>php artisan route:clear
